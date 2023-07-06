@@ -1,0 +1,5 @@
+Hi Everyone,
+
+My name is Joey Annand, and I currently live with my girlfriend and our two cats in Boston. Before moving to Boston, I grew up in southeastern MA in Bristol County. I graduated from Stonehill College a couple of years ago with a degree in Chemistry, and I currently work as an R&D Scientist for a medical device manufacturer. Outside of work and school, I love video games, cooking, and film & TV. 
+
+I started at Merrimack last summer in the M.S. in Computer Science program. I completed the first two courses before deciding to switch to Data Science. My goal in completing this program is to learn and develop my skills in a field in which I am interested, while also expanding my professional abilities to advance my career as a scientist. In this course, specifically, I am hoping to learn more about using R and RStudio, and I am excited to learn how to use Github and version control so that I can better develop projects and begin collaborating with my co-workers on them.
