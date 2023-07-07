@@ -78,7 +78,11 @@ Show which value is contained in the test vector. To do this you will need to cr
 ```{r ex6}
 #your code below
 
+# returns the values of x, y, and z that are in the test vector
 test_vector[x == test_vector | y == test_vector | z == test_vector]
 
+# returns the indices of the values of x, y, and z that are in the test vector
+which(x == test_vector | y == test_vector | z == test_vector)
+
 ```
-y and z are contained are in the test vector. x is not.
+y and z are contained are in the test vector at indices 2 and 12, respectively. x is not contiane din the test vector.
