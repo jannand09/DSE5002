@@ -28,7 +28,7 @@ Show that x is less than z but greater than y.
 ```{r ex2}
 #your code below
 
-x < z | x > y
+x < z & x > y
 
 ```
 
@@ -40,7 +40,7 @@ Show that x and y do not equal z.
 ```{r ex3}
 #your code here
 
-x != z | y != z
+x != z & y != z
 
 ```
 
@@ -85,4 +85,4 @@ test_vector[x == test_vector | y == test_vector | z == test_vector]
 which(x == test_vector | y == test_vector | z == test_vector)
 
 ```
-y and z are contained are in the test vector at indices 2 and 12, respectively. x is not contiane din the test vector.
+y and z are contained are in the test vector at indices 2 and 12, respectively. x is not contianed in the test vector.
