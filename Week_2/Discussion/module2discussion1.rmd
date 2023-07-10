@@ -1,0 +1,44 @@
+---
+title: "Module2Discussion1"
+author: "Joseph Annand"
+date: "2023-07-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Discussion
+
+R is a relatively slow programming language, even compared to Python, another interpreted language (https://towardsdatascience.com/python-vs-and-r-for-data-science-4a32580846a4). Specifically, loops in R take comparatively long times to execute. While loops are standard practice in other programming languages, R takes a different approach using vectorized functions. Vectorized functions operate on all elements of a vector, which saves a considerable amount of time compared to looping through the vector and operating on each element individually. Mathematical operators and some base R functions, like paste, are vectorized.
+
+The example below shows the difference between a vectorized function and a loop (https://towardsdatascience.com/make-your-r-code-10x-faster-vectorization-explained-in-3-minutes-9eb4cdd7a49e):
+
+```{r}
+library(microbenchmark)
+
+x <- 1:50
+
+# This vectorized expression...
+vectorized <- function(x) {
+  paste0("file_", x)
+}
+
+# Does the same thing as this loop!
+loop <- function(x) {
+  filenames <- vector()
+  for (i in x) {
+    filenames[i] <- paste0("file_", i)
+  }
+}
+
+microbenchmark(vectorized(x), loop(x))
+```
+
+The vectorized function takes an average time of 71 microseconds to execute, while the loop function takes an average time of 354 microseconds to execute.
+
+Vectorized operations allows R programmers to save time applying functions to large amounts of data. For example, vectorized functions would be useful when it is necessary to perform an operation on all observations in a column of a dataframe. Vectorized functions are also useful for manipulating matrices. Any time where the R script is performing some operation repeatedly, it may be beneficial to use a vectorized operation to reduce the execution time of the script.
+
+Scalar functions can be vectorized using the base R function, Vectorize (https://rdrr.io/r/base/Vectorize.html). Implementing this function can be useful when we want to apply some function that typically takes a scalar value as its argument to a large amount of data as a vector.
+
