@@ -38,7 +38,9 @@ You can extract a vector of columns names from a data frame using the colnames()
 ```{r}
 # Your code here
 
+# Create character vector of column names in sales
 sales_colnames <- colnames(sales)
+# Rename first column of sales data frame
 sales[,1] = "Row.ID"
 
 ```
@@ -53,15 +55,21 @@ How many weeks?
 ```{r}
 # Your code here
 
+# Convert ship dates to date-times using mdy()
 sales$Ship.Date = mdy(sales[["Ship.Date"]])
+# Convert order dates to date-times using mdy()
 sales$Order.Date = mdy(sales[["Order.Date"]])
 
+# Find difference between most recent order and oldest order in days
 diff_days <- difftimes(max(sales$Order.Date), min(sales$Order.Date), units="days")
+diff_days
 
+# Calculate difference in years
 diff_days / 365.25
 
-diff_days / 7
-
+# Calculate difference in week
+diff_weeks <- difftimes(max(sales$Order.Date), min(sales$Order.Date), units="weeks")
+diff_weeks
 ```
 
 The number of days between the most recent order and the oldest order is 1457 days. The difference in years in 3.989049 years. The difference in weeks is 208.1429 weeks.
@@ -72,9 +80,10 @@ What is the average number of days it takes to ship an order?
 
 ```{r}
 # Your code here
-
+# Create column indicating amount of days between Ship.Date and Order.Date
 sales$Ship.Time <- (sales$Ship.Date - sales$Order.Date)
 
+# Calculate the average number of days to ship an order
 mean(sales$Ship.Time)
 
 ```
@@ -87,12 +96,17 @@ You will need to split the customer name into first and last name segments and t
 
 ```{r}
 # Your code here
-temp_char <- stringr::str_split_fixed(string=sales$Customer.Name,pattern=' ',n=2)
+# Split Customer.Name column into two columns for first and last name
+sales[c("First.Name", "Last.Name")] <- stringr::str_split_fixed(string=sales$Customer.Name,pattern=' ',n=2)
 
-customers_bill <- grep("Bill", temp_char[, 1])
+# Create a vector of all indices with the first name Bill
+customers_bill <- grep("Bill", sales$First.Name)
 
+# Return the length of the vector with all customers named Bill
 length(customers_bill)
 ```
+
+There are 37 customers with the first name Bill.
 
 # Exercise 6
 How many mentions of the word 'table' are there in the Product.Name column? 
@@ -100,15 +114,20 @@ How many mentions of the word 'table' are there in the Product.Name column?
 
 ```{r}
 # Your code here
-
+# Return the length of the vector of all product names that mention "table"
+length(grep("table", sales$Product.Name))
 ```
+
+There are 197 mentions of the word 'table' in Product.Name column.
 
 # Exercise 7
 Create a table of counts for each state in the sales data. The counts table should be ordered alphabetically from A to Z. 
 
 ```{r}
 # Your code here
-
+# Create a frequency table for State column and convert it to a data frame
+states_df <- as.data.frame(table(sales$State))
+states_df
 ```
 
 # Exercise 8
@@ -116,7 +135,13 @@ Create an alphabetically ordered barplot for each sales Category in the State of
 
 ```{r}
 # Your code here
+# Create data frame with all observations where state is Texas
+texas_df <- subset(sales, State=="Texas")
 
+# Convert values of Category column for texas_df to factors and create frequency table
+texas_categories <- table(factor(texas_df$Category))
+# Plot texas_categories frequency table in a bar chart
+barplot(texas_categories)
 ```
 
 # Exercise 9
@@ -125,7 +150,8 @@ Find the average profit by region.
 
 ```{r}
 # Your code here
-
+# Determine the mean of profits grouped by region
+aggregate(sales$Profit, list(sales$Region), mean)
 ```
 
 # Exercise 10
@@ -134,6 +160,10 @@ Find the average profit by order year.
 
 ```{r}
 # Your code here
+# Create a column representing the year the order was placed
+sales$Order.Year <- year(sales$Order.Date)
+# Determine the mean of profits by order year
+aggregate(sales$Profit, list(sales$Order.Year), mean)
 
 ```
 
