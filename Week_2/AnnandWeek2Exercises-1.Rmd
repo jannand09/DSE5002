@@ -1,7 +1,7 @@
 ---
 title: "Week 2 Exercises"
-author: "Your Name Here"
-date: "May 14, 2022"
+author: "Joseph Annand"
+date: "July 15, 2023"
 output: pdf_document
 ---
 
@@ -39,7 +39,7 @@ You can extract a vector of columns names from a data frame using the colnames()
 # Your code here
 
 sales_colnames <- colnames(sales)
-sales_colnames[1] = "Row.ID"
+sales[,1] = "Row.ID"
 
 ```
 
@@ -56,19 +56,15 @@ How many weeks?
 sales$Ship.Date = mdy(sales[["Ship.Date"]])
 sales$Order.Date = mdy(sales[["Order.Date"]])
 
-most_recent_order <- max(sales$Order.Date)
-oldest_order <- min(sales$Order.Date)
+diff_days <- difftimes(max(sales$Order.Date), min(sales$Order.Date), units="days")
 
-difftime(most_recent_order, oldest_order, unit="days")
+diff_days / 365.25
 
-diff_years <- interval(oldest_order, most_recent_order) %/% years(1)
-diff_years
-
-difftime(most_recent_order, oldest_order, unit="weeks")
+diff_days / 7
 
 ```
 
-The number of days between the most recent order and the oldest order is 1457 days. The difference in years in 3 years. The difference in weeks is 208 weeks.
+The number of days between the most recent order and the oldest order is 1457 days. The difference in years in 3.989049 years. The difference in weeks is 208.1429 weeks.
 
 
 # Exercise 4
@@ -77,12 +73,13 @@ What is the average number of days it takes to ship an order?
 ```{r}
 # Your code here
 
-average_ship <- difftime(sales$Ship.Date, sales$Order.Date, unit="days")
-mean(average_ship)
+sales$Ship.Time <- (sales$Ship.Date - sales$Order.Date)
+
+mean(sales$Ship.Time)
 
 ```
 
-The average number of days it takes to ship an order is 3.91 days.
+The average number of days it takes to ship an order is 3.908482 days.
 
 # Exercise 5
 How many customers have the first name Bill?
@@ -90,7 +87,11 @@ You will need to split the customer name into first and last name segments and t
 
 ```{r}
 # Your code here
-temp_char <- stringr::str_split_fixed(string=sales_csv$Customer.Name,pattern=' ',n=2)
+temp_char <- stringr::str_split_fixed(string=sales$Customer.Name,pattern=' ',n=2)
+
+customers_bill <- grep("Bill", temp_char[, 1])
+
+length(customers_bill)
 ```
 
 # Exercise 6
