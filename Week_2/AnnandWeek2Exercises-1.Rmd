@@ -61,14 +61,14 @@ sales$Ship.Date = mdy(sales[["Ship.Date"]])
 sales$Order.Date = mdy(sales[["Order.Date"]])
 
 # Find difference between most recent order and oldest order in days
-diff_days <- difftimes(max(sales$Order.Date), min(sales$Order.Date), units="days")
+diff_days <- difftime(max(sales$Order.Date), min(sales$Order.Date), units="days")
 diff_days
 
 # Calculate difference in years
 diff_days / 365.25
 
 # Calculate difference in week
-diff_weeks <- difftimes(max(sales$Order.Date), min(sales$Order.Date), units="weeks")
+diff_weeks <- difftime(max(sales$Order.Date), min(sales$Order.Date), units="weeks")
 diff_weeks
 ```
 
