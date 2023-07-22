@@ -65,14 +65,15 @@ diff_days <- difftime(max(sales$Order.Date), min(sales$Order.Date), units="days"
 diff_days
 
 # Calculate difference in years
-diff_days / 365.25
+diff_years <- time_length(diff_days, unit="years")
+diff_years
 
 # Calculate difference in week
 diff_weeks <- difftime(max(sales$Order.Date), min(sales$Order.Date), units="weeks")
 diff_weeks
 ```
 
-The number of days between the most recent order and the oldest order is 1457 days. The difference in years in 3.989049 years. The difference in weeks is 208.1429 weeks.
+The number of days between the most recent order and the oldest order is 1457 days. The difference in years in 3.989041 years. The difference in weeks is 208.1429 weeks.
 
 
 # Exercise 4
@@ -99,14 +100,16 @@ You will need to split the customer name into first and last name segments and t
 # Split Customer.Name column into two columns for first and last name
 sales[c("First.Name", "Last.Name")] <- stringr::str_split_fixed(string=sales$Customer.Name,pattern=' ',n=2)
 
-# Create a vector of all indices with the first name Bill
-customers_bill <- grep("Bill", sales$First.Name)
+# Filter all orders by customer named Bill
+customers_bill <- sales[ sales$First.Name == "Bill", ]
+# Get number of unique customers named Bill
+length(rownames(as.data.frame(table(customers_bill$Customer.Name))))
 
-# Return the length of the vector with all customers named Bill
+# Return length of data frame with all orders placed by customer with the first name Bill
 length(customers_bill)
 ```
 
-There are 37 customers with the first name Bill.
+There are 6 unique customers named Bill. There are 37 orders by customers with the first name Bill.
 
 # Exercise 6
 How many mentions of the word 'table' are there in the Product.Name column? 
@@ -115,10 +118,10 @@ How many mentions of the word 'table' are there in the Product.Name column?
 ```{r}
 # Your code here
 # Return the length of the vector of all product names that mention "table"
-length(grep("table", sales$Product.Name))
+length(grep("(T|t)able", sales$Product.Name))
 ```
 
-There are 197 mentions of the word 'table' in Product.Name column.
+There are 371 mentions of the word 'table' in Product.Name column.
 
 # Exercise 7
 Create a table of counts for each state in the sales data. The counts table should be ordered alphabetically from A to Z. 
