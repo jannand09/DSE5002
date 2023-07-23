@@ -46,21 +46,23 @@ Only one valid answer exists.
 ```{r}
 two_sum <- function(nums_vector,target){
   #your code here
-  answers <- list()
+  # find two values in a vector whose sum is equal to target value using brute-force algorithm
+  # param nums_vector: (num) vector of numeric values
+  # param target: (num) numeric target sum value
+  # returns: (num) vector of indices of two values in nums_vector that add up to target
   for(i in seq_along(nums_vector)) {
     for(j in seq_along(nums_vector)) {
       if (target == (nums_vector[i] + nums_vector[j])) {
-        answers <- c(answers, list(c(i, j)))
+        return(c(i, j))
       }
     }
   }
-  return(answers)
 }
 
 # Test code
 nums_vector <- c(5,7,12,34,6,10,8,9)
 target <- 13
-
+class(target)
 two_sum(nums_vector,target)
 #expected answers
 #[1] 1 7
@@ -81,7 +83,10 @@ library(hash)
 
 two_sum <- function(nums_vector,target){
   #your code here
-  answers <- list()
+  # find two values in a vector whose sum is equal to target value using hash table
+  # param nums_vector: (num) vector of numeric values
+  # param target: (num) numeric target sum value
+  # returns: (num) vector of indices of two values in nums_vector that add up to target
   h_two_sum <- hash()
   
   for (i in seq_along(nums_vector)) {
@@ -91,10 +96,9 @@ two_sum <- function(nums_vector,target){
   for (j in 1:length(h_two_sum)) {
     complement <- as.character((target - as.numeric(names(h_two_sum)[j])))
     if (has.key(complement, h_two_sum)) {
-      answers <- c(answers, list(c(h_two_sum[[names(h_two_sum)[j]]], h_two_sum[[complement]])))
+      return(c(h_two_sum[[names(h_two_sum)[j]]], h_two_sum[[complement]]))
     }
   }
-  return(answers)
 }
 
 
