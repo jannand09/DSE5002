@@ -49,7 +49,7 @@ two_sum <- function(nums_vector,target){
   answers <- list()
   for(i in seq_along(nums_vector)) {
     for(j in seq_along(nums_vector)) {
-      if ((nums_vector[i] + nums_vector[j]) == target) {
+      if (target == (nums_vector[i] + nums_vector[j])) {
         answers <- c(answers, list(c(i, j)))
       }
     }
@@ -57,13 +57,10 @@ two_sum <- function(nums_vector,target){
   return(answers)
 }
 
-#my_list <- list()
-#my_list <- append(my_list, as.vector(c(1,2)))
-
 # Test code
 nums_vector <- c(5,7,12,34,6,10,8,9)
 target <- 13
- 
+
 two_sum(nums_vector,target)
 #expected answers
 #[1] 1 7
@@ -80,16 +77,31 @@ Loop the array once to make a hash map of the value to its index. Then loop agai
 *A simple implementation uses two iterations. In the first iteration, we add each element's value as a key and its index as a value to the hash table. Then, in the second iteration, we check if each element's complement (target – nums_vector[i]) exists in the hash table. If it does exist, we return current element's index and its complement's index. Beware that the complement must not be nums_vector[i] itself!*
 
 ```{r}
+library(hash)
+
 two_sum <- function(nums_vector,target){
   #your code here
+  answers <- list()
+  h_two_sum <- hash()
   
+  for (i in seq_along(nums_vector)) {
+    h_two_sum[(target - nums_vector[i])] <- i
+  }
+  
+  for (j in 1:length(h_two_sum)) {
+    complement <- as.character((target - as.numeric(names(h_two_sum)[j])))
+    if (has.key(complement, h_two_sum)) {
+      answers <- c(answers, list(c(h_two_sum[[names(h_two_sum)[j]]], h_two_sum[[complement]])))
+    }
+  }
+  return(answers)
 }
 
 
 # Test code
 nums_vector <- c(5,7,12,34,6,10,8,9)
 target <- 15
- 
+
 two_sum(nums_vector,target)
 #expected answers
 #[1] 10  5
