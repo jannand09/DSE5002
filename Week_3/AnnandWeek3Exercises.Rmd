@@ -53,7 +53,7 @@ two_sum <- function(nums_vector,target){
   for(i in seq_along(nums_vector)) {
     for(j in seq_along(nums_vector)) {
       if (target == (nums_vector[i] + nums_vector[j])) {
-        return(c(i, j))
+        return(c( i, j ))
       }
     }
   }
@@ -62,7 +62,7 @@ two_sum <- function(nums_vector,target){
 # Test code
 nums_vector <- c(5,7,12,34,6,10,8,9)
 target <- 13
-class(target)
+
 two_sum(nums_vector,target)
 #expected answers
 #[1] 1 7
@@ -87,16 +87,16 @@ two_sum <- function(nums_vector,target){
   # param nums_vector: (num) vector of numeric values
   # param target: (num) numeric target sum value
   # returns: (num) vector of indices of two values in nums_vector that add up to target
-  h_two_sum <- hash()
+  h <- hash()
   
   for (i in seq_along(nums_vector)) {
-    h_two_sum[(target - nums_vector[i])] <- i
+    h[(target - nums_vector[i])] <- i
   }
   
-  for (j in 1:length(h_two_sum)) {
-    complement <- as.character((target - as.numeric(names(h_two_sum)[j])))
-    if (has.key(complement, h_two_sum)) {
-      return(c(h_two_sum[[names(h_two_sum)[j]]], h_two_sum[[complement]]))
+  for (j in 1:length(h)) {
+    comp <- as.character((target - as.numeric(names(h)[j])))
+    if (comp %in% names(h)) {
+      return(c( h[[names(h)[j]]] , h[[comp]] ))
     }
   }
 }
