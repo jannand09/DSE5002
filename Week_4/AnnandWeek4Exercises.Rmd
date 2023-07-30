@@ -32,6 +32,7 @@ https://tidyr.tidyverse.org/reference/who.html
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(stringr)
 
 #your code here
 data(who)
@@ -57,14 +58,20 @@ who <- left_join(who, population, by=c("country", "year"))
 
 ```{r}
 # your code here
-
+who <- who %>%
+  mutate(age = str_replace(age, "014", "0014")) %>%
+  separate(col = "age",
+           into = c("min_age", "max_age"),
+           sep = 2) %>%
+  mutate(min_age = str_replace(min_age, "00", "0"))
 ```
 
 4) Since we ignored the 65+ group in the previous problem we will fix it here. If you examine the data you will notice that 65 was placed into the max_age column and there is no value for min_age for those records. To fix this use mutate() in order to replace the blank value in the min_age column with the value from the max_age column and another mutate to replace the 65 in the max column with an Inf. Be sure to keep the variables as character vectors.  
 
 ```{r}
 # your code here
-
+who <- who %>%
+  mutate(max_age = replace(max_age, max_age=="", as.character(Inf)))
 ```
 
 5) Find the count per diagnosis for males and females.
