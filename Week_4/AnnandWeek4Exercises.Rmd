@@ -80,13 +80,24 @@ who <- who %>%
 
 ```{r}
 # your code here
-
+who %>%
+  select(c("diagnosis", "gender", "count")) %>%
+  group_by(gender,diagnosis) %>%
+  summarise(diagnosis_count=sum(count, na.rm = TRUE))
 ```
 
 6) Now create a plot using ggplot and geom_col where your x axis is gender, your y axis represents the counts, and facet by diagnosis. Be sure to give your plot a title and resolve the axis labels. 
 
 ```{r}
 #your code here
+ggplot(data = who,
+       mapping = aes(x=gender, y=count)) +
+  geom_col() +
+  labs(x='Gender',
+       y='Counts',
+       title="Count per diagnosis by gender") +
+  facet_grid(.~diagnosis)
+      
 ```
 
 7) Find the percentage of population by year, gender, and diagnosis. Be sure to remove rows containing NA values. 
