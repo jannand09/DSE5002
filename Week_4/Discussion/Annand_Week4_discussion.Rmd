@@ -1,0 +1,36 @@
+---
+title: "Week 4 Discussion"
+author: "Joseph Annand"
+date: "2023-07-27"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(readr)
+```
+
+```{r}
+wide_data <- read.csv("C:/Users/janna/Documents/Merrimack MSDS/DSE5002/Week_4/Data/global_burden_disease_wide-format.csv")
+
+long_data <- read.csv("C:/Users/janna/Documents/Merrimack MSDS/DSE5002/Week_4/Data/global_burden_disease_cause-year-sex.csv")
+```
+
+Wide data is useful for humans to read and collect data into a spreadsheet like an Excel workbook; however, more useful for data analysis and visualization is long data. When represented in long format, the data is arranged so that each observation is recorded as its own row. Wide data will have many columns and few rows, so individual observations cannot be distinguished. Some or all of the columns in wide format may be levels of a factor, such as months or genders. For these two reasons, representing multiple data types using a single wide format table can be difficult. In some cases, storing all data types may take multiple tables in wide format. Long format solves this issue since each observation can store all the different data types, or variables, of each observation in columns. 
+
+Changing from wide format to long format is especially important when graphing multiple variables on a plot using R or Python. Long data is more "computer readable," and the data visualization package, ggplot2, actually works best with data in long format. In my experience, MiniTab, another statistical software prefers long data when creating plots. Across different software and programming languages, pivoting wide data to long data can save you time and headaches.
+
+https://argoshare.is.ed.ac.uk/healthyr_book/reshaping-data-long-vs-wide-format.html
+https://towardsdatascience.com/long-and-wide-formats-in-data-explained-e48d7c9a06cb
+https://www.statology.org/long-vs-wide-data/
+https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html
+
+```{r}
+wide_data %>%
+  pivot_longer(matches("Female|Male"),
+               names_to = "sex_year",
+               values_to = "deaths_millions")
+```
+
